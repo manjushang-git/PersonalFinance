@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Add Data</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  </head>
+  
+<script>
+
+function myFunction() {
+var text1= $('#text1').val();
+var text2= $('#text2').val();
+  $.ajax({
+              url: "/join",
+              type: "POST",
+              data: {text1:text1,
+              text2:text2}
+
+          }).done(function(response) {
+
+            var html= "<br><br><br><p> <b> RESULT : <b><p>";
+
+            response =response.result;
+                 $.each(response,function(key,val){
+                 console.log(val);
+                    html+="<p>"+val+"<p>"
+
+                });
+                html +="<br>";
+                $(".show-data").append(html);
+            });
+};
+
+  </script>
+  <body>
+    {% extends "PersonalFinanceHome.html" %}
+    {% block content %}
+    
+   <form method="post">
+  <label for="OrderId">Order Id:</label>
+  <input type="text" id="OrderId" name="OrderId" />
+  <br>
+  <br>
+  <label for="ShopName">Shop Name:</label>
+  <input type="text" id="ShopName" name="ShopName" />
+  <br>
+  <br>
+  <label for="PaymentBy">Payment By:</label>
+  <input type="text" id="PaymentBy" name="PaymentBy" />
+  <br>
+  <br>
+  <label for="purchasePrice">Total Price ($):</label>
+  <input type="text" id="purchasePrice" name="purchasePrice" />
+  <br>
+  <br>
+  <label for="Category">Category:</label>
+  <select name="Category" id="Category">
+  <option value="Grocery">Grocery</option>
+  <option value="Furniture">Furniture</option>
+  <option value="Food">Food</option>
+  <option value="Stay">Stay</option>
+  </select>
+
+   
+ 
+  
+  <br>
+  <br>
+  <button id="clicked" onclick="myFunction()">Submit</button>
+</form>
+      
+    {% endblock %}
+  </body>
+</html>

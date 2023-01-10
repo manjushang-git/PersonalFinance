@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block content %}
+ <form action = "/browse" method = "post" enctype="multipart/form-data">  
+        <label for="Vendor">Vendor:</label>
+		  <select name="Vendor" id="Vendor">
+		  <option value="More">More</option>
+		  <option value="BigBasket">Big Basket</option>
+		  </select>
+
+		<input type="file" name="file" />  
+        <input type = "submit" value="Upload">  
+		<b>{{ name }}<b>
+ </form>  
+ 
+  <form action = "/createnew" method = "post" enctype="multipart/form-data">  
+  
+    <div class="form-group">
+      <label for="email">Category:</label>
+      <input type="text" class="form-control" id="Category" placeholder="Enter Category" name="Category">
+    </div>
+    <div class="form-group">
+      <label for="pwd">Amount:</label>
+      <input type="text" class="form-control" id="Amount" placeholder="Enter Amount" name="Amount">
+    </div>
+    <div class="form-group form-check">
+      <label class="form-check-label">
+        <input class="form-check-input" type="checkbox" name="remember"> Remember me
+      </label>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+ </form>  
+ 
+ 
+ <br>
+ <br>
+  <table id="data" class="table table-striped">
+    <thead>
+      <tr>
+       	
+		<th>Invoice date</th>
+		<th>Transaction type</th>
+		<th>Invoice no</th>
+		<th>vendor</th>
+		<th>vendor address</th>
+		<th>Transaction category</th>
+		<th>Transaction amount</th>
+		<th>Transaction desc</th>
+		<th>Payment mode</th>
+		<th>Payment desc</th>
+		<th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+   
+ 
+    // Delete a record
+    $('#data').on('click', 'td.editor-delete', function (e) {
+	     alert('delete');
+		 
+        
+    } );
+	
+	$(document).ready(function () {
+      $('#data').DataTable({
+        ajax: '/api/data',
+        serverSide: true,
+        columns: [
+                              
+			{data: 'invoice_date'},
+			{data: 'trans_type'},                     
+			{data: 'invoice_no'},                     
+			{data: 'vendor'},          
+			{data: 'vendor_address'},                 
+			{data: 'trans_category'},                 
+			{data: 'trans_amount'},                   
+			{data: 'trans_desc'},                     
+			{data: 'payment_mode'},                   
+			{data: 'payment_desc'},
+			{
+				data: null,
+				className: "dt-center editor-delete",
+				orderable: false,
+				"mRender" : function ( data, type, row ) {
+					return '<a href="" id="deletebtn_' + data.trans_no+'" >Delete <i class="fe fe-delete"></i></a>';
+				}
+			}
+            
+        ],
+		order: [[0, 'desc']]
+      });
+    });
+	
+  </script>
+{% endblock %}
