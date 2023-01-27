@@ -61,7 +61,7 @@ class TRANSACTION_MASTER(Base):
         my_list=[ 'trans_no: ',self.trans_no, 
                     'trans_type: ',self.trans_type,     
                     'invoice_no: ',self.invoice_no  ,   
-                    'invoice_date: ',self.invoice_date.strftime('%m/%d/%Y'),    
+                    #'invoice_date: ',self.invoice_date.strftime('%m/%d/%Y'),    
                     'vendor: '  ,self.vendor,         
                     'vendor_address: ',self.vendor_address ,
                     'trans_category: ',self.trans_category ,

@@ -1,0 +1,59 @@
+
+
+ <div class="col-md-5">
+   <script>
+   
+        $(document).ready(function() {
+            $("form").submit(function(e) {
+                e.preventDefault();
+                var expenseName = $("#expense-name").val();
+                var expenseAmount = $("#expense-amount").val();
+                var expenseDate = $("#expense-date").val();
+                var expenseCategory = $("#expense-category").val();
+               
+                $.ajax({
+                    type: "POST",
+                    url: "/createexpense",
+                    data: { expenseName: expenseName, expenseAmount: expenseAmount, expenseDate: expenseDate, expenseCategory: expenseCategory },
+                    success: function(data) {
+                        alert("Expense submitted successfully!");
+                        $("form")[0].reset();
+                    },
+                    error: function(data) {
+                        alert("Error submitting expense. Please try again.");
+                    }
+                });
+            });
+        });
+     </script> 
+  <form>
+        <div class="form-group">
+          <label for="expense-name">Expense Name</label>
+          <input type="text" class="form-control" id="expense-name" placeholder="Enter expense name">
+        </div>
+        <div class="form-group">
+          <label for="expense-amount">Expense Amount</label>
+          <input type="number" class="form-control" id="expense-amount" placeholder="Enter expense amount">
+        </div>
+        <div class="form-group">
+          <label for="expense-date">Expense Date</label>
+          <input type="date" class="form-control" id="expense-date">
+        </div>
+        <div class="form-group">
+          <label for="expense-category">Expense Category</label>
+          <select class="form-control" id="expense-category">
+            <option>Food</option>
+            <option>Transportation</option>
+            <option>Shopping</option>
+            <option>Entertainment</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+      
+       
+      
+ 
+        </div>
+       

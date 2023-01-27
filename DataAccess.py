@@ -13,8 +13,9 @@ import Transaction_MasterTO
 def insert(trans_masterTO):
     session = Session()
     items=[]
-    for details in trans_masterTO.items:
-        items.append(TRANSACTION_DETAILS(details))
+    if trans_masterTO.items is not None:
+        for details in trans_masterTO.items:
+            items.append(TRANSACTION_DETAILS(details))
     trans_master=TRANSACTION_MASTER(trans_masterTO,items)
     print(trans_master)
     # 9 - persists data

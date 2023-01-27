@@ -1,0 +1,54 @@
+
+
+ <div class="col-md-5">
+ <script>
+   
+        $(document).ready(function() {
+            $("form").submit(function(e) {
+                e.preventDefault();
+                var incomeName = $("#income-name").val();
+                var incomeAmount = $("#income-amount").val();
+                var incomeDate = $("#income-date").val();
+                var incomeCategory = $("#income-category").val();
+                alert('any issues in income');
+                $.ajax({
+                    type: "POST",
+                    url: "/createincome",
+                    data: {incomeName:incomeName,incomeAmount:incomeAmount,incomeDate:incomeDate,incomeCategory:incomeCategory },
+                    success: function(data) {
+                        alert("Income submitted successfully!");
+                        $("form")[0].reset();
+                    },
+                    error: function(data) {
+                        alert("Error submitting income. Please try again.");
+                    }
+                });
+            });
+        });
+     </script> 
+  <form>
+    <div class="form-group">
+      <label for="income-name">Income Name</label>
+      <input type="text" class="form-control" id="income-name" placeholder="Enter income name">
+    </div>
+    <div class="form-group">
+      <label for="income-amount">Income Amount</label>
+      <input type="number" class="form-control" id="income-amount" placeholder="Enter income amount">
+    </div>
+    <div class="form-group">
+      <label for="income-date">Income Date</label>
+      <input type="date" class="form-control" id="income-date">
+    </div>
+    <div class="form-group">
+      <label for="income-category">Income Category</label>
+      <select class="form-control" id="income-category">
+        <option>Salary</option>
+        <option>Investment</option>
+        <option>Business</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+      
+</div>

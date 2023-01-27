@@ -1,0 +1,54 @@
+
+
+ <div class="col-md-5">
+  <script>
+   
+        $(document).ready(function() {
+            $("form").submit(function(e) {
+                e.preventDefault();
+                var savingsName = $("#savings-name").val();
+                var savingsAmount = $("#savings-amount").val();
+                var savingsDate = $("#savings-date").val();
+                var savingsCategory = $("#savings-category").val();
+               
+                $.ajax({
+                    type: "POST",
+                    url: "/createsavings",
+                    data: {savingsName:savingsName,savingsAmount:savingsAmount,savingsDate:savingsDate,savingsCategory:savingsCategory },
+                    success: function(data) {
+                        alert("savings submitted successfully!");
+                        $("form")[0].reset();
+                    },
+                    error: function(data) {
+                        alert("Error submittingsavings. Please try again.");
+                    }
+                });
+            });
+        });
+     </script> 
+ <form>
+    <div class="form-group">
+      <label for="savings-name">Savings Name</label>
+      <input type="text" class="form-control" id="savings-name" placeholder="Enter savings name">
+    </div>
+    <div class="form-group">
+      <label for="savings-amount">Savings Amount</label>
+      <input type="number" class="form-control" id="savings-amount" placeholder="Enter savings amount">
+    </div>
+    <div class="form-group">
+      <label for="savings-date">Savings Date</label>
+      <input type="date" class="form-control" id="savings-date">
+    </div>
+    <div class="form-group">
+      <label for="savings-category">Savings Category</label>
+      <select class="form-control" id="savings-category">
+        <option>Emergency Fund</option>
+        <option>Retirement</option>
+        <option>Investment</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+      
+</div>

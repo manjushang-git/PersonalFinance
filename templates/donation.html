@@ -1,0 +1,54 @@
+
+
+ <div class="col-md-5">
+   <script>
+   
+        $(document).ready(function() {
+            $("form").submit(function(e) {
+                e.preventDefault();
+                var donationName = $("#donation-name").val();
+                var donationAmount = $("#donation-amount").val();
+                var donationDate = $("#donation-date").val();
+                var donationCategory = $("#donation-category").val();
+               
+                $.ajax({
+                    type: "POST",
+                    url: "/createdonation",
+                    data: {donationName:donationName,donationAmount:donationAmount,donationDate:donationDate,donationCategory:donationCategory },
+                    success: function(data) {
+                        alert("donation submitted successfully!");
+                        $("form")[0].reset();
+                    },
+                    error: function(data) {
+                        alert("Error submittingdonation. Please try again.");
+                    }
+                });
+            });
+        });
+     </script> 
+ <form>
+    <div class="form-group">
+      <label for="donation-name">Donation Name</label>
+      <input type="text" class="form-control" id="donation-name" placeholder="Enter donation name">
+    </div>
+    <div class="form-group">
+      <label for="donation-amount">Donation Amount</label>
+      <input type="number" class="form-control" id="donation-amount" placeholder="Enter donation amount">
+    </div>
+    <div class="form-group">
+      <label for="donation-date">Donation Date</label>
+      <input type="date" class="form-control" id="donation-date">
+    </div>
+    <div class="form-group">
+      <label for="donation-category">Donation Category</label>
+      <select class="form-control" id="donation-category">
+        <option>Charity</option>
+        <option>Education</option>
+        <option>Religion</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+      
+</div>

@@ -1,54 +1,60 @@
 {% extends "base.html" %}
+ 
 
 {% block content %}
- <form action = "/browse" method = "post" enctype="multipart/form-data">  
-        <label for="Vendor">Vendor:</label>
-		  <select name="Vendor" id="Vendor">
-		  <option value="More">More</option>
-		  <option value="BigBasket">Big Basket</option>
-		  </select>
-
-		<input type="file" name="file" />  
-        <input type = "submit" value="Upload">  
-		<b>{{ name }}<b>
- </form>  
+$(document).ready(function(){
+   
+  });
+</script>
+<div class="row">
+        <div class="col-12">
+          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Menu</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="#" id="expense-link">Expense</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#" id="income-link">Income</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#" id="saving-link">Saving</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#" id="donation-link">Donation</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#" id="browsetransaction-link">browsetransaction</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </div>
+	
+ <div  class="row" id="content"></div>
  
-  <form action = "/createnew" method = "post" enctype="multipart/form-data">  
   
-    <div class="form-group">
-      <label for="email">Category:</label>
-      <input type="text" class="form-control" id="Category" placeholder="Enter Category" name="Category">
-    </div>
-    <div class="form-group">
-      <label for="pwd">Amount:</label>
-      <input type="text" class="form-control" id="Amount" placeholder="Enter Amount" name="Amount">
-    </div>
-    <div class="form-group form-check">
-      <label class="form-check-label">
-        <input class="form-check-input" type="checkbox" name="remember"> Remember me
-      </label>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-
- </form>  
- 
- 
- <br>
- <br>
-  <table id="data" class="table table-striped">
+		
+		
+		
+	
+		<div class="row">
+        <div class="col-md-12">
+             <table id="data" class="table table-striped">
     <thead>
       <tr>
        	
 		<th>Invoice date</th>
-		<th>Transaction type</th>
-		<th>Invoice no</th>
 		<th>vendor</th>
-		<th>vendor address</th>
 		<th>Transaction category</th>
 		<th>Transaction amount</th>
 		<th>Transaction desc</th>
 		<th>Payment mode</th>
-		<th>Payment desc</th>
 		<th></th>
         <th></th>
       </tr>
@@ -56,12 +62,14 @@
     <tbody>
     </tbody>
   </table>
+    </div>
+		 </div>
 {% endblock %}
 
 {% block scripts %}
-  <script>
-   
- 
+ <script>
+  
+  
     // Delete a record
     $('#data').on('click', 'td.editor-delete', function (e) {
 	     alert('delete');
@@ -70,21 +78,79 @@
     } );
 	
 	$(document).ready(function () {
+    
+   
+		 
+       
+    $("#expense-link").click(function(event){
+   
+      event.preventDefault();
+      $.ajax({
+          type: 'GET',
+          url: '/expense',
+          success: function(response){
+            $('#content').html(response);
+          }
+      });
+    });
+
+    $("#income-link").click(function(event){
+   
+      event.preventDefault();
+      $.ajax({
+        type: 'GET',
+        url:'/income',
+        success: function(data) {
+          $("#content").html(data);
+        }
+      });
+    });
+
+    $("#saving-link").click(function(event){
+      event.preventDefault();
+      $.ajax({
+         type: 'GET',
+        url:'/saving',
+        success: function(data) {
+          $("#content").html(data);
+        }
+      });
+    });
+
+    $("#donation-link").click(function(event){
+      event.preventDefault();
+      $.ajax({
+         type: 'GET',
+         url:'/donation',
+        success: function(data) {
+          $("#content").html(data);
+        }
+      });
+    });
+
+    $("#browsetransaction-link").click(function(event){
+      event.preventDefault();
+      $.ajax({
+        type: "GET",
+        url: "/browsetransaction",
+        success: function(data) {
+          $("#content").html(data);
+        }
+      });
+    });
+	  $('#datepicker').datepicker(); 
+			
       $('#data').DataTable({
         ajax: '/api/data',
         serverSide: true,
         columns: [
                               
-			{data: 'invoice_date'},
-			{data: 'trans_type'},                     
-			{data: 'invoice_no'},                     
-			{data: 'vendor'},          
-			{data: 'vendor_address'},                 
+			{data: 'invoice_date'},                  
+			{data: 'vendor'},                   
 			{data: 'trans_category'},                 
 			{data: 'trans_amount'},                   
 			{data: 'trans_desc'},                     
-			{data: 'payment_mode'},                   
-			{data: 'payment_desc'},
+			{data: 'payment_mode'}, 
 			{
 				data: null,
 				className: "dt-center editor-delete",
@@ -101,3 +167,12 @@
 	
   </script>
 {% endblock %}
+      
+		
+	
+ 
+ 
+ 
+ 
+ 
+ 

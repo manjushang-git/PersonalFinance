@@ -1,0 +1,41 @@
+
+
+ <div class="col-md-5">
+   <script>
+   
+        $(document).ready(function() {
+			$("form").submit(function(e) {
+				e.preventDefault();
+				var formData = new FormData(this);
+				var vendor = $("#Vendor").val();
+				formData.append("vendor", vendor);
+
+				$.ajax({
+					type: "POST",
+					url: "/createbrowsetrans",
+					data: formData,
+					contentType: false,
+					processData: false,
+					success: function(data) {
+						alert("File uploaded successfully!");
+					},
+					error: function(data) {
+						alert("Error uploading file. Please try again.");
+					}
+				});
+			});
+		});
+     </script> 
+ <form  enctype="multipart/form-data">  
+	<label for="Vendor">Vendor:</label>
+	  <select name="Vendor" id="Vendor">
+	  <option value="More">More</option>
+	  <option value="BigBasket">Big Basket</option>
+	  </select>
+
+	<input type="file" name="file" />  
+	<input type = "submit" class="btn btn-primary" value="Upload">  
+	<b>{{ name }}<b>
+</form> 
+
+</div>
