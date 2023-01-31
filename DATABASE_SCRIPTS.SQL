@@ -8,7 +8,7 @@ DROP TABLE   "OHM"."TRANSACTION_DETAILS" ;
 
 DROP TABLE  "OHM"."TRANSACTION_MASTER" ;
   CREATE TABLE "OHM"."TRANSACTION_MASTER" 
-   (	"TRANS_TYPE" CHAR(1 BYTE), 
+   (	"TRANS_TYPE"  varchar2(15), 
 	"INVOICE_NO" VARCHAR2(20 BYTE), 
 	"INVOICE_DATE" DATE, 
 	"VENDOR" VARCHAR2(100 BYTE), 
@@ -242,3 +242,6 @@ INSERT INTO transactions (
     0,
     333
 );
+
+
+alter table transaction_master modify TRANS_TYPE varchar2(15)

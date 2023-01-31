@@ -37,6 +37,7 @@ def createexpense():
     expense_date = request.form['expenseDate']
     expense_category = request.form['expenseCategory']
     print('Printed eXPENSE ------ ' ,expense_name,expense_amount,expense_date,expense_category)
+    util.createAdHocItem('Expense',expense_name,expense_amount,expense_date,expense_category);
     return "Expense submitted successfully!"
 
 @app.route('/createincome', methods = ['POST']) 
@@ -47,6 +48,7 @@ def createincome():
     income_date = request.form['incomeDate']
     income_category = request.form['incomeCategory']
     print('Printed income ------ ' ,income_name,income_amount,income_date,income_category)
+    util.createAdHocItem('Income',income_name,income_amount,income_date,income_category);
     return "Income submitted successfully!"
 
 @app.route('/createsavings', methods = ['POST']) 
@@ -57,6 +59,7 @@ def createsavings():
     savings_date = request.form['savingsDate']
     savings_category = request.form['savingsCategory']
     print('Printed savings ------ ' ,savings_name,savings_amount,savings_date,savings_category)
+    util.createAdHocItem('Savings',savings_name,savings_amount,savings_date,savings_category);
     return "Savings submitted successfully!"
 
 @app.route('/createdonation', methods = ['POST']) 
@@ -67,6 +70,7 @@ def createdonation():
     donation_date = request.form['donationDate']
     donation_category = request.form['donationCategory']
     print('Printed donation ------ ' ,donation_name,donation_amount,donation_date,donation_category)
+    util.createAdHocItem('Donation',donation_name,donation_amount,donation_date,donation_category);
    
     return "Donation submitted successfully!"
 

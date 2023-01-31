@@ -210,17 +210,17 @@ def insert_bigbasket_data(f):
 def getTransactions(search,order_by,start,length):
     return DataAccess.getTransactions(search,order_by,start,length)
     
-def createAdHocItem(Category,Amount,pDate):
+def createAdHocItem(transtype,transdesc,Amount,pDate,transcategory):
     
     trans_masterTO=MasterTO.Transaction_MasterTO(  
-                trans_type='C',
+                trans_type=transtype,
                 invoice_no=None,
-                invoice_date=pDate,
-                vendor=Category,
-                vendor_address=Category,
-                trans_category=Category,
+                invoice_date=parser.parse(str.strip(pDate)) ,
+                vendor=transdesc,
+                vendor_address=transdesc,
+                trans_category=transcategory,
                 trans_amount=Amount,
-                trans_desc=Category,
+                trans_desc=transdesc,
                 payment_mode='Cash',
                 payment_desc='Cash',
                 items=None
