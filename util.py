@@ -207,7 +207,12 @@ def insert_bigbasket_data(f):
     print('items---->',items)
     connectdb.insert_data(items)
     return items
+
+def get_expenses():
+    return DataAccess.getExpense()
+
 def getTransactions(search,order_by,start,length):
+    print('--------------------------------------------------Printing',search,'-',order_by,'-',start,'-',length)
     return DataAccess.getTransactions(search,order_by,start,length)
     
 def createAdHocItem(transtype,transdesc,Amount,pDate,transcategory):

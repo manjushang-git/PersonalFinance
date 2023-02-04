@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request,jsonify
 import util
 
 app = Flask(__name__)
@@ -130,5 +130,26 @@ def data():
     }
 
 
+@app.route('/api/expenses', methods=['GET'])
+def get_expenses():
+    expenses = util.get_expenses()
+    print(expenses)
+    return jsonify(expenses)
+
+@app.route('/api/expenses/<int:expense_id>', methods=['GET', 'PUT', 'DELETE'])
+def expense_details(expense_id):
+    print(' edit expense ',expense_id)
+    if request.method == 'GET':
+        expense = util.get_expense(expense_id)
+        return jsonify(expense)
+    elif request.method == 'PUT':
+        expense = request.get_json()
+        util.update_expense(expense_id, expense)
+        return '', 204
+    elif request.method == 'DELETE':
+        util.delete_expense(expense_id)
+        return '', 204
+    
+    
 if __name__ == '__main__':
     app.run()

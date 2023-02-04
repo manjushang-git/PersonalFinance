@@ -56,6 +56,15 @@ class TRANSACTION_MASTER(Base):
             'payment_mode' :self.payment_mode ,  
             'payment_desc' :self.payment_desc  ,
         }
+    
+    def to_dict_expense(self):
+        return {
+            'Expense_no':self.trans_no, 
+            'name':self.trans_desc , 
+            'amount':self.trans_amount ,   
+            'amount':self.invoice_date , 
+            'category':self.trans_category ,
+        }
        
     def __repr__(self):
         my_list=[ 'trans_no: ',self.trans_no, 

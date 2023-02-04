@@ -45,3 +45,24 @@ def getTransactions(search,order_by,start,length):
     page_count=query.count()
     
     return [trans.to_dict() for trans in query],page_count,total_count
+
+def getExpense():
+    session = Session()
+    query = session.query(TRANSACTION_MASTER).with_entities(TRANSACTION_MASTER.trans_no,TRANSACTION_MASTER.trans_desc,TRANSACTION_MASTER.trans_amount,TRANSACTION_MASTER.invoice_date,TRANSACTION_MASTER.trans_category).all()
+   
+    total_count=len(query)
+    print('  total_count   ====',total_count)
+    query = query[1:11]
+    page_count=len(query)
+    
+    result = []
+    for trans in query:
+        trans_dict = {}
+        trans_dict['id'] = trans.trans_no
+        trans_dict['name'] = trans.trans_desc
+        trans_dict['amount'] = trans.trans_amount
+        trans_dict['date'] =trans.invoice_date
+        trans_dict['category'] = trans.trans_category
+        result.append(trans_dict)
+    
+    return result,page_count,total_count

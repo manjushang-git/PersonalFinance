@@ -1,9 +1,10 @@
 
 
- <div class="col-md-5">
+ <div class="col-md-3">
    <script>
    
         $(document).ready(function() {
+        alert('ready');
             $("form").submit(function(e) {
                 e.preventDefault();
                 var expenseName = $("#expense-name").val();
@@ -24,7 +25,122 @@
                     }
                 });
             });
+      
+      
+
+  });
+  
+  
+$(document).ready(function(){
+  $.ajax({
+    url: '/api/expenses',
+    type: 'GET',
+    success: function(expenses) {
+   
+    expen=expenses[0];
+   
+   
+      
+       expen.forEach(function(expense) {
+     
+      
+        $("#expense-table-body").append(
+          `<tr>
+             <td>${expense.name}</td>
+             <td>${expense.amount}</td>
+             <td>${expense.date}</td>
+             <td>${expense.category}</td>
+             <td>
+               <button class="btn btn-primary edit-button" data-id="${expense.id}" data-toggle="modal" data-target="#editModal">Edit</button>
+               <button class="btn btn-danger delete-button" data-id="${expense.id}">Delete</button>
+             </td>
+           </tr>`
+        );
+        
+      })
+      }
+      
+    
+       });
+       
+    
+      // Edit button click event
+      $(".edit-button").click(function() {
+      alert('clicked 1')
+        const id = $(this).data("id");
+
+        // Get expense data from API
+        $.ajax({
+          url: `/api/expenses/${id}`,
+          type: 'GET',
+          success: function(expense) {
+            $("#edit-name").val(expense.name);
+            $("#edit-amount").val(expense.amount);
+            $("#edit-date").val(expense.date);
+            $("#edit-category").val(expense.category);
+          }
         });
+        });
+
+        // Save changes button click event
+        $("#save-edit-button").click(function() {
+        alert('clicked 2')
+          const updatedExpense = {
+            name: $("#edit-name").val(),
+            amount: $("#edit-amount").val(),
+            date: $("#edit-date").val(),
+            category: $("#edit-category").val()
+          };
+          });
+          
+
+          // Update expense data using API
+          $.ajax({
+            url: `/api/expenses/${id}`,
+            type: 'PUT',
+            data: JSON.stringify(updatedExpense),
+            contentType: 'application/json',
+            success: function() {
+              window.location.reload();
+            }
+          });
+        
+     
+
+      // Delete button click event
+      $(".delete-button").click(function() {
+      alert('clicked 3')
+        const id = $(this).data("id");
+
+        // Delete expense data using API
+        $.ajax({
+          url: `/api/expenses/${id}`,
+          type: 'DELETE',
+          success: function() {
+            window.location.reload();
+          }
+        });
+      });
+  
+     });
+  
+         $(document).on('click', '.edit-button', function() {
+  const id = $(this).data("id");
+  alert('clicked 1' + id)
+  // rest of the code for the edit event
+    $.ajax({
+          url: `/api/expenses/${id}`,
+          type: 'GET',
+          success: function(expense) {
+            $("#edit-name").val(expense.name);
+            $("#edit-amount").val(expense.amount);
+            $("#edit-date").val(expense.date);
+            $("#edit-category").val(expense.category);
+          }
+        });
+});
+
+
      </script> 
   <form>
         <div class="form-group">
@@ -55,5 +171,63 @@
        
       
  
+        </div>
+       <div class="col-md-9">
+        <table id="expense-table" class="table table-striped">
+  <thead>
+    <tr>
+      <th>Expense Name</th>
+      <th>Expense Amount</th>
+      <th>Expense Date</th>
+      <th>Expense Category</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody id="expense-table-body">
+  </tbody>
+</table>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Edit Expense</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="edit-expense-name">Expense Name</label>
+            <input type="text" class="form-control" id="edit-expense-name">
+          </div>
+          <div class="form-group">
+            <label for="edit-expense-amount">Expense Amount</label>
+            <input type="text" class="form-control" id="edit-expense-amount">
+          </div>
+          <div class="form-group">
+            <label for="edit-expense-date">Expense Date</label>
+            <input type="date" class="form-control" id="edit-expense-date">
+          </div>
+          <div class="form-group">
+            <label for="edit-expense-category">Expense Category</label>
+            <input type="text" class="form-control" id="edit-expense-category">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="save-edit-button">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  
+
+  
+</script>
         </div>
        
